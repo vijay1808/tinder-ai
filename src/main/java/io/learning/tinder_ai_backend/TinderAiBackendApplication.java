@@ -26,14 +26,22 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		System.out.println("Testing DB Connection");
+		profileRepository.deleteAll();
+		conversationRepository.deleteAll();
+
 		Profile profile = new Profile("1","Vijay","Parthasarathy",
 				33,"Indian", Gender.MALE,
 				"Software Consultant",
 				"foo.jpg","Nill"
 		);
 	    profileRepository.save(profile);
+		Profile profile2 = new Profile("2","foo","bar",
+				33,"Indian", Gender.MALE,
+				"Software Consultant",
+				"foo.jpg","Nill"
+		);
+		profileRepository.save(profile2);
 		System.out.println("Data Saved");
 		profileRepository.findAll().forEach(System.out::println);
 
