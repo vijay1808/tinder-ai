@@ -42,7 +42,7 @@ public class ConversationController {
     @PostMapping("/conversations/{conversationId}")
     public Conversation addMessageToConversation(@PathVariable String conversationId,
                                                 @RequestBody ChatMessage chatMessage) {
-
+        System.out.println("here");
         Conversation conversation=conversationRepository.findById(conversationId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find conversation with ID " + conversationId));
         profileRepository.findById(chatMessage.authorId())
                 .orElseThrow(() -> new ResponseStatusException(
@@ -62,6 +62,7 @@ public class ConversationController {
     @GetMapping("/conversations/{conversationId}")
     public Conversation getConversation(@PathVariable String conversationId)
     {
+        System.out.println("hello");
         return conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
