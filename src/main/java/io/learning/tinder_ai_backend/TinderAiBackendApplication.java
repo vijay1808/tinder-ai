@@ -6,6 +6,9 @@ import io.learning.tinder_ai_backend.conversations.ConversationRepository;
 import io.learning.tinder_ai_backend.profiles.Gender;
 import io.learning.tinder_ai_backend.profiles.Profile;
 import io.learning.tinder_ai_backend.profiles.ProfileRepository;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,10 +19,17 @@ import java.util.List;
 
 @SpringBootApplication
 public class TinderAiBackendApplication implements CommandLineRunner {
+
+
+	ProfileCreationService profileCreationService;
+
     @Autowired
 	ProfileRepository profileRepository;
 	@Autowired
 	ConversationRepository conversationRepository;
+
+	@Autowired
+	private OpenAiChatModel chatModel;
 	public static void main(String[] args) {
 		SpringApplication.run(TinderAiBackendApplication.class, args);
 	}
@@ -30,6 +40,10 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 		profileRepository.deleteAll();
 		conversationRepository.deleteAll();
 
+		Prompt prompt= new Prompt("Hello, How are you ?");
+		ChatResponse response=chatModel.call(prompt);
+		System.out.println(response.getResult().getOutput().getContent());
+		System.out.println(response);
 		Profile profile = new Profile("1","Vijay","Parthasarathy",
 				33,"Indian", Gender.MALE,
 				"Software Consultant",
