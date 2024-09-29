@@ -11,7 +11,7 @@ public class ProfileController {
 
     @GetMapping("/profiles/random")
 public Profile getRandomProfile(){
-
+        System.out.println(profileRepository.count());
         return profileRepository.getRandomProfile();
 
 

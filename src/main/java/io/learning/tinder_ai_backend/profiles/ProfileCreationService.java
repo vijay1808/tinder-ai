@@ -3,9 +3,9 @@ package io.learning.tinder_ai_backend.profiles;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.ai.chat.ChatResponse;
+//import org.springframework.ai.chat.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
-import static io.javabrains.tinderaibackend.Utils.generateMyersBriggsTypes;
-import static io.javabrains.tinderaibackend.Utils.selfieTypes;
+//import static io.javabrains.tinderaibackend.Utils.generateMyersBriggsTypes;
+//import static io.javabrains.tinderaibackend.Utils.selfieTypes;
 import static java.lang.StringTemplate.STR;
 
 @Service
@@ -57,7 +57,7 @@ public class ProfileCreationService {
     private ProfileRepository profileRepository;
 
 
-    public ProfileCreationService(OpenAiChatClient chatClient, ProfileRepository profileRepository) {
+    public ProfileCreationService(OpenAiChatModel chatClient, ProfileRepository profileRepository) {
         this.chatClient = chatClient;
         this.profileRepository = profileRepository;
         this.httpClient = HttpClient.newHttpClient();
@@ -70,7 +70,7 @@ public class ProfileCreationService {
         return list.get(ThreadLocalRandom.current().nextInt(list.size()));
     }
 
-    public void createProfiles(int numberOfProfiles) {
+   /*public void createProfiles(int numberOfProfiles) {
 
         if (!this.initializeProfiles) {
             return;
@@ -102,10 +102,10 @@ public class ProfileCreationService {
         }
         // Save the values in a JSON file
         saveProfilesToJson(this.generatedProfiles);
-    }
+    }*/
 
 
-    private void saveProfilesToJson(List<Profile> generatedProfiles) {
+ /*   private void saveProfilesToJson(List<Profile> generatedProfiles) {
         try {
             Gson gson = new Gson();
             List<Profile> existingProfiles = gson.fromJson(
@@ -127,9 +127,9 @@ public class ProfileCreationService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
-    private Profile generateProfileImage(Profile profile) {
+  /*  private Profile generateProfileImage(Profile profile) {
         String uuid = StringUtils.isBlank(profile.id()) ? UUID.randomUUID().toString() : profile.id();
         profile = new Profile(
                 uuid,
@@ -196,7 +196,7 @@ public class ProfileCreationService {
 
 
 
-    }
+    }*/
 
 
     @Bean
@@ -220,6 +220,7 @@ public class ProfileCreationService {
             );
             profileRepository.deleteAll();
             profileRepository.saveAll(existingProfiles);
+            System.out.println(profileRepository.count());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

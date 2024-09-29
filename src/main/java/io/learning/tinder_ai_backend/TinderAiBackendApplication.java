@@ -5,6 +5,7 @@ import io.learning.tinder_ai_backend.conversations.Conversation;
 import io.learning.tinder_ai_backend.conversations.ConversationRepository;
 import io.learning.tinder_ai_backend.profiles.Gender;
 import io.learning.tinder_ai_backend.profiles.Profile;
+import io.learning.tinder_ai_backend.profiles.ProfileCreationService;
 import io.learning.tinder_ai_backend.profiles.ProfileRepository;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -21,6 +22,7 @@ import java.util.List;
 public class TinderAiBackendApplication implements CommandLineRunner {
 
 
+	@Autowired
 	ProfileCreationService profileCreationService;
 
     @Autowired
@@ -39,7 +41,9 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 		System.out.println("Testing DB Connection");
 		profileRepository.deleteAll();
 		conversationRepository.deleteAll();
-
+		profileCreationService.saveProfilesToDB();
+		/*profileRepository.deleteAll();
+		conversationRepository.deleteAll();
 		Prompt prompt= new Prompt("Hello, How are you ?");
 		ChatResponse response=chatModel.call(prompt);
 		System.out.println(response.getResult().getOutput().getContent());
@@ -65,7 +69,7 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 
         conversationRepository.save(conversation);
 		System.out.println("Data Saved");
-		conversationRepository.findAll().forEach(System.out::println);
+		conversationRepository.findAll().forEach(System.out::println);*/
 
 	}
 }
